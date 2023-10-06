@@ -125,6 +125,38 @@ li:hover {
 	text-align: center;
 	margin-bottom: 1em;
 }
+
+/* style pour les bouttons de filtrage */
+.filtresBox {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	margin-bottom: 40px;
+}
+.button {
+	border: #1D6154 1px solid;
+	border-radius: 25px;
+	padding: 10px 15px;
+	margin: 0px 5px;
+	color: #1D6154;
+	font-weight: bold;
+	font-size: 1.1em;
+}
+.button:hover {
+	cursor: pointer;
+	box-shadow:0px 3px 15px rgb(29, 97, 84, 0.5);
+}
+.btsml {
+	padding: 10px 25px;
+}
+.filtreOn {
+	background-color: #1D6154;
+	color: white;
+}
+
+/*  */
+
 .gallery {
 	width: 100%;
 	display: grid;
