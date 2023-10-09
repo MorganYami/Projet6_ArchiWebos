@@ -16,6 +16,7 @@ async function fetchProjets() {
 //génération des fiches projets
 const gallery = document.getElementById("gallery");
 function genererProjets(projets) {
+    console.log(projets);
     for (let i = 0; i < projets.length; i++) {
         const projetsElement = document.createElement("figure");
         const imageElement = document.createElement("img");
@@ -30,4 +31,41 @@ function genererProjets(projets) {
 
 //affichage initial de la page
 const projets = fetchProjets().then(projets => genererProjets(projets))
+
+//filtrage des projets
+let filtres = document.getElementsByClassName("filtreOn")
+let filtreOn = filtres[0]
+const filtreTous = document.getElementById("Tous")
+const filtreObjets = document.getElementById("Objets")
+const filtreAppartements = document.getElementById("Appartements")
+const filtreHotelsResto = document.getElementById("HotelsResto")
+
+filtreTous.addEventListener("click", function () {
+    let filtres = document.getElementsByClassName("filtreOn")
+    let filtreOn = filtres[0]
+    filtreOn.classList.remove("filtreOn")
+    filtreTous.classList.add("filtreOn")
+})
+
+filtreObjets.addEventListener("click", function () {
+    let filtres = document.getElementsByClassName("filtreOn")
+    let filtreOn = filtres[0]
+    filtreOn.classList.remove("filtreOn")
+    filtreObjets.classList.add("filtreOn")
+})
+
+filtreAppartements.addEventListener("click", function () {
+    let filtres = document.getElementsByClassName("filtreOn")
+    let filtreOn = filtres[0]
+    filtreOn.classList.remove("filtreOn")
+    filtreAppartements.classList.add("filtreOn")
+})
+
+filtreHotelsResto.addEventListener("click", function () {
+    let filtres = document.getElementsByClassName("filtreOn")
+    let filtreOn = filtres[0]
+    filtreOn.classList.remove("filtreOn")
+    filtreHotelsResto.classList.add("filtreOn")
+})
+
 
