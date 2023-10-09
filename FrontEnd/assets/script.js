@@ -10,7 +10,14 @@ async function fetchProjets() {
     if (r.ok === true) {
         return r.json();
     }
-    throw new Error('Impossible de contacter le serveur')
+    else {
+        try {
+            throw new Error('Impossible de contacter le serveur')
+        }
+        catch (error) {
+            console.error(error);
+        }
+    }
 }
 
 //génération des fiches projets
@@ -45,6 +52,7 @@ filtreTous.addEventListener("click", function () {
     let filtreOn = filtres[0]
     filtreOn.classList.remove("filtreOn")
     filtreTous.classList.add("filtreOn")
+    console.log("click: " + projets);
 })
 
 filtreObjets.addEventListener("click", function () {
@@ -67,5 +75,3 @@ filtreHotelsResto.addEventListener("click", function () {
     filtreOn.classList.remove("filtreOn")
     filtreHotelsResto.classList.add("filtreOn")
 })
-
-
