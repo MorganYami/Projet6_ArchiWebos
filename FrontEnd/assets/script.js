@@ -1,4 +1,4 @@
-// récupération projets
+//  ----------  récupération projets
 
 async function fetchProjets() {
     const r = await fetch("http://localhost:5678/api/works", {
@@ -20,7 +20,8 @@ async function fetchProjets() {
     }
 }
 
-//génération des fiches
+// ----------  génération des fiches (functions)
+// afficher tous les projets
 const gallery = document.getElementById("gallery");
 function genererProjets(param) {
     for (let i = 0; i < param.length; i++) {
@@ -35,6 +36,7 @@ function genererProjets(param) {
     }
 }
 
+// afficher les projets objets
 function genererObjets(param2) {
     let projetObjets = [];
     for (let i = 0; i < param2.length; i++) {
@@ -54,6 +56,7 @@ function genererObjets(param2) {
     }
 }
 
+// afficher les projets Appartements
 function genererAppart(param3) {
     let projetAppart = [];
     for (let i = 0; i < param3.length; i++) {
@@ -73,6 +76,7 @@ function genererAppart(param3) {
     }
 }
 
+// afficher les projets Hôtels et Restaurants
 function genererHR(param4) {
     let projetHR = [];
     for (let i = 0; i < param4.length; i++) {
@@ -92,12 +96,12 @@ function genererHR(param4) {
     }
 }
 
-//affichage initial de la page
+// ----------  affichage initial de la page
 const projetsAll = fetchProjets();
 projetsAll.then(projets => genererProjets(projets));
 
 
-//filtrage des projets
+// ----------  filtrage des projets - (Event listener)
 let filtres = document.getElementsByClassName("filtreOn")
 let filtreOn = filtres[0]
 const filtreTous = document.getElementById("Tous")
@@ -105,6 +109,7 @@ const filtreObjets = document.getElementById("Objets")
 const filtreAppartements = document.getElementById("Appartements")
 const filtreHotelsResto = document.getElementById("HotelsResto")
 
+// afficher tous les projets
 filtreTous.addEventListener("click", function () {
     let filtres = document.getElementsByClassName("filtreOn")
     let filtreOn = filtres[0]
@@ -114,6 +119,7 @@ filtreTous.addEventListener("click", function () {
     projetsAll.then(projets => genererProjets(projets));
 })
 
+// afficher les projets objets
 filtreObjets.addEventListener("click", function () {
     let filtres = document.getElementsByClassName("filtreOn")
     let filtreOn = filtres[0]
@@ -123,6 +129,7 @@ filtreObjets.addEventListener("click", function () {
     projetsAll.then(objets => genererObjets(objets));
 })
 
+// afficher les projets Appartements
 filtreAppartements.addEventListener("click", function () {
     let filtres = document.getElementsByClassName("filtreOn")
     let filtreOn = filtres[0]
@@ -132,6 +139,7 @@ filtreAppartements.addEventListener("click", function () {
     projetsAll.then(Appart => genererAppart(Appart));
 })
 
+// afficher les projets Hôtels et Restaurants
 filtreHotelsResto.addEventListener("click", function () {
     let filtres = document.getElementsByClassName("filtreOn")
     let filtreOn = filtres[0]
