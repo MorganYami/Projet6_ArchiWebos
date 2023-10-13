@@ -1,0 +1,56 @@
+.logTittle {
+    text-align: center;
+    font-weight: normal;
+    font-size: 2em;
+    color:#1D6154;
+    margin-top:150px;
+    margin-bottom: 50px;
+}
+.formBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 200px;
+}
+.logForm {
+    width: 380px;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.labelMail, .labelMdp, .inputLog {
+    width: 100%;
+    font-weight: bold;
+}
+
+.inputLog {
+    padding: 10px 0px;
+    font-size: 1.5em;
+    border: none;
+    outline: none;
+    box-shadow: 5px 7px 10px rgb(243, 242, 236),
+    -5px 7px 10px rgb(243, 242, 236)
+}
+
+.buttonConnect {
+    font-size: 1em;
+    font-weight: bold;
+    padding: 10px 25px;
+    border: 0px;
+    border-radius: 25px;
+    background-color: #1D6154;
+    color: white;
+    width: 180px;
+}
+.buttonConnect:hover {
+    cursor: pointer;
+    box-shadow: 1px 1px 10px rgb(155, 154, 149);
+}
+
+.mdpOublie {
+    color: #3d3d3d;
+    font-weight: bold;
+}

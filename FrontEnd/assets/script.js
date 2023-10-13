@@ -31,7 +31,11 @@ function displayProjets(projets) {
 // afficher les projets objets
 function displayObjets(projets) {
     let projetObjets = [];
-    // projets.filter ( projets => projets.categoryId === 1)
+    // function categorieObjet (objet) {
+    //     return objet == 1;
+    // }
+    // projetObjets = projets.filter ( categorieObjet);
+
     for (let i = 0; i < projets.length; i++) {
         if (projets[i].categoryId == 1) {
             projetObjets.push(projets[i]);
