@@ -31,11 +31,6 @@ function displayProjets(projets) {
 // afficher les projets objets
 function displayObjets(projets) {
     let projetObjets = [];
-    // function categorieObjet (objet) {
-    //     return objet == 1;
-    // }
-    // projetObjets = projets.filter ( categorieObjet);
-
     for (let i = 0; i < projets.length; i++) {
         if (projets[i].categoryId == 1) {
             projetObjets.push(projets[i]);
@@ -67,13 +62,8 @@ function displayHR(projets) {
 }
 
 // ----------  affichage initial de la page
-const projets = [];
-const projetsAll = fetchProjets();
-projetsAll.then(projets => displayProjets(projets));
-// fetchProjets().then(data => {
-//     data.forEach(projets => projets.push(projets));
-//     displayProjets(projets);
-// })
+fetchProjets().then(projets => displayProjets(projets));
+
 
 // ----------  filtrage des projets - (Event listener)
 const filtres = document.getElementsByClassName("filtreOn")
@@ -93,23 +83,31 @@ function toggleFiltre (boutonActif) {
 // afficher tous les projets
 filtreTous.addEventListener("click", function () {
     toggleFiltre (filtreTous);
-    projetsAll.then(projets => displayProjets(projets));
+    fetchProjets().then(function(data) {
+        displayProjets(data)
+    })
 })
 
 // afficher les projets objets
 filtreObjets.addEventListener("click", function () {
     toggleFiltre (filtreObjets);
-    projetsAll.then(objets => displayObjets(objets));
+    fetchProjets().then(function(data) {
+        displayObjets(data)
+    })
 })
 
 // afficher les projets Appartements
 filtreAppartements.addEventListener("click", function () {
     toggleFiltre (filtreAppartements);
-    projetsAll.then(Appart => displayAppart(Appart));
+    fetchProjets().then(function(data) {
+        displayAppart(data)
+    })
 })
 
 // afficher les projets Hôtels et Restaurants
 filtreHotelsResto.addEventListener("click", function () {
     toggleFiltre (filtreHotelsResto);
-    projetsAll.then(HR => displayHR(HR));
+    fetchProjets().then(function(data) {
+        displayHR(data)
+    })
 })
