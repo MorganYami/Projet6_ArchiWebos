@@ -73,7 +73,7 @@ const filtreAppartements = document.getElementById("Appartements")
 const filtreHotelsResto = document.getElementById("HotelsResto")
 
 // changer le bouton actif et vider la gallerie
-function toggleFiltre (boutonActif) {
+function toggleFiltre(boutonActif) {
     const filtreOn = filtres[0]
     filtreOn.classList.toggle("filtreOn")
     boutonActif.classList.toggle("filtreOn")
@@ -82,32 +82,32 @@ function toggleFiltre (boutonActif) {
 
 // afficher tous les projets
 filtreTous.addEventListener("click", function () {
-    toggleFiltre (filtreTous);
-    fetchProjets().then(function(data) {
+    toggleFiltre(filtreTous);
+    fetchProjets().then(function (data) {
         displayProjets(data)
     })
 })
 
 // afficher les projets objets
 filtreObjets.addEventListener("click", function () {
-    toggleFiltre (filtreObjets);
-    fetchProjets().then(function(data) {
+    toggleFiltre(filtreObjets);
+    fetchProjets().then(function (data) {
         displayObjets(data)
     })
 })
 
 // afficher les projets Appartements
 filtreAppartements.addEventListener("click", function () {
-    toggleFiltre (filtreAppartements);
-    fetchProjets().then(function(data) {
+    toggleFiltre(filtreAppartements);
+    fetchProjets().then(function (data) {
         displayAppart(data)
     })
 })
 
 // afficher les projets Hôtels et Restaurants
 filtreHotelsResto.addEventListener("click", function () {
-    toggleFiltre (filtreHotelsResto);
-    fetchProjets().then(function(data) {
+    toggleFiltre(filtreHotelsResto);
+    fetchProjets().then(function (data) {
         displayHR(data)
     })
 })
