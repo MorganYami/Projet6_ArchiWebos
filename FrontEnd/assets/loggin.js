@@ -26,7 +26,9 @@ formulaire.addEventListener('submit', event => {
             else {
                 messageErreur.innerHTML = ``;
                 console.log("reponse serveur: ");
-                console.log(data);
+                console.log(data);    
+                window.localStorage.setItem("token", data.token);    
+                window.location.href = "index.html";        
             }
         })
         .catch(error => console.log(error));

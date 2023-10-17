@@ -111,3 +111,9 @@ filtreHotelsResto.addEventListener("click", function () {
         displayHR(data)
     })
 })
+
+//test pour le token
+const token = window.localStorage.getItem("token");
+if (token !== null) {
+    console.log("Un token a été détecté: " + token);
+}
