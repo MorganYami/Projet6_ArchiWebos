@@ -113,7 +113,43 @@ filtreHotelsResto.addEventListener("click", function () {
 })
 
 //test pour le token
-const token = window.localStorage.getItem("token");
-if (token !== null) {
-    console.log("Un token a été détecté: " + token);
+const token = localStorage.getItem("token");
+const linkLog = document.getElementById("linkLog");
+const modif =  document.getElementById("modifProjets");
+const boiteFiltres = document.getElementById("filtresBox");
+if (token == null) {
+    linkLog.innerHTML = `
+    <a href="loggin.html">login</a>
+    `;
+    modif.innerHTML = `
+    `;
+    if (boiteFiltres.classList == ("cacher")) {
+        boiteFiltres.classList.remove("cacher");
+        boiteFiltres.innerHTML = `
+        <div id="Tous" class="button btsml filtreOn">Tous</div>
+				<div id="Objets" class="button btsml">Objets</div>
+				<div id="Appartements" class="button">Appartements</div>
+				<div id="HotelsResto" class="button">Hôtels & restaurants</div>
+        `;
+    }
 }
+else {
+    console.log("Un token a été détecté: " + token);
+    linkLog.innerHTML = `
+    <a id="logout" href="">logout</a>
+    `;
+    modif.innerHTML = `
+    <img src="./assets/icons/iconEdit.png">
+					<p>modifier</p>
+    `;
+    boiteFiltres.innerHTML = `
+    <div class="vide"></div>
+    `;
+    boiteFiltres.classList.add("cacher");
+    //fonction pour log out
+    const loggout = document.getElementById("logout");
+    loggout.addEventListener("click", function () {
+        localStorage.removeItem("token");
+    })
+}
+

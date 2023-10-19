@@ -25,10 +25,10 @@ formulaire.addEventListener('submit', event => {
             }
             else {
                 messageErreur.innerHTML = ``;
-                console.log("reponse serveur: ");
-                console.log(data);    
-                window.localStorage.setItem("token", data.token);    
-                window.location.href = "index.html";        
+                // console.log("reponse serveur: ");
+                // console.log(data);    
+                localStorage.setItem("token", data.token);    
+                location.href = "index.html";        
             }
         })
         .catch(error => console.log(error));

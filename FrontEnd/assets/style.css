@@ -164,6 +164,35 @@ li:hover {
 }
 
 /*  */
+.titleBarre {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: baseline;
+	margin-top: 100px;
+}
+.titleBarre img {
+	width: 1.5em;
+	height: 1.5em;
+	margin-bottom: 1em;
+	margin-left: 40px;
+	margin-right: 20px;
+}
+.titleBarre p {
+	font-size: 1em;
+	font-weight: bold;
+	margin-bottom: 1em;
+}
+.modifProjets {	
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: baseline;
+}
+.modifProjets:hover {
+	color: #B1663C;
+	cursor: pointer;
+}
 
 .gallery {
 	width: 100%;
@@ -225,4 +254,9 @@ footer nav ul {
 	justify-content: flex-end;
 	margin: 2em
 }
-
+.cacher{
+	margin-top: 0%;
+}
+.vide {
+	margin-bottom: 0px;
+}
