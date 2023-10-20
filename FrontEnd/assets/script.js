@@ -134,7 +134,7 @@ if (token == null) {
     }
 }
 else {
-    console.log("Un token a été détecté: " + token);
+    console.log("Un token a été détecté!");
     linkLog.innerHTML = `
     <a id="logout" href="">logout</a>
     `;
