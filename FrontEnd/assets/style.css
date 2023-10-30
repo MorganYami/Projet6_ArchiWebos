@@ -386,20 +386,26 @@ footer nav ul {
 	opacity: 0.5;
 }
 
-#modale {
+.displayFlex {
+	display: flex;
+}
+.Rien {
+	display: none;
+}
+.modale {
 	position: fixed;
-	top: 20px;
+	top: 60px;
 	left: 25%;
 	width: 50%;
 	background-color: white;
 	border-radius: 10px;
 	padding: 30px;
-	display: flex;
 	flex-direction: column;
 	align-items: flex-end;
+    box-shadow: 1px 1px 10px rgb(155, 154, 149);
 }
 
-#modale h2 {
+.modaleTittle {
 	color: black;
 	font-size: 26px;
 	font-family: 'Work Sans';
@@ -407,12 +413,12 @@ footer nav ul {
 	margin-top: 20px;
 }
 
-#close {
+.close {
 	height: 12px;
 	width: 12px;
 }
 
-#close:hover {
+.close:hover {
 	cursor: pointer;
 }
 
@@ -423,7 +429,7 @@ footer nav ul {
 	align-items: center;
 }
 
-#photoList {
+.photoList {
 	width: 80%;
 	border-bottom: 1px solid grey;
 	margin: 50px 0px;
@@ -436,8 +442,8 @@ footer nav ul {
 }
 .bin {
 	position: relative;
-	top: 5px;
-	left: 80px;
+	bottom: 133px;
+	left: 75px;
 	width: 15px; 
 	padding: 3px;
 	border-radius: 4px;
@@ -450,9 +456,17 @@ footer nav ul {
 
 .photoProjet {
 	background-size: cover;
-	width: 18%;
+	background-position: center;
+	width: 100px;
 	height: 135px;
-	margin-bottom: 30px;
+	margin: 0px 10px 30px 0px;
+}
+.photoProjetIn {
+	position: relative;
+	top: 0%;
+	left: 0%;
+	width: 100%;
+	height: 100%;
 }
 .photo1 {
 	background-image: url("./images/abajour-tahina.png");

@@ -115,7 +115,7 @@ filtreHotelsResto.addEventListener("click", function () {
 //test pour le token
 const token = localStorage.getItem("token");
 const linkLog = document.getElementById("linkLog");
-const modif =  document.getElementById("modifProjets");
+const modif = document.getElementById("modifProjets");
 const boiteFiltres = document.getElementById("filtresBox");
 if (token == null) {
     linkLog.innerHTML = `
@@ -153,3 +153,40 @@ else {
     })
 }
 
+// ------------------ Fenêtre modale
+
+const croixFermer = document.getElementById("close");
+const modaleBackground = document.getElementById("modaleBackground");
+const modale = document.getElementById("modale");
+const modaleOn = document.getElementById("modifProjets");
+const photoList = document.getElementById("photoList");
+
+// gallerie photos modale
+function genererPhotosModale(projets) {
+    projets.forEach(projets => {
+        photoList.innerHTML += `
+        <div class="photoProjet">
+            <img class="photoProjetIn" src="${projets.imageUrl}" alt="${projets.title}">
+			<img class="bin" src="./assets/icons/iconBin.png">
+		</div>
+        `
+    });
+}
+
+// fermer fenêtre modale
+function fermerModale() {
+    modaleBackground.classList.toggle("Rien");
+    modale.classList.toggle("displayFlex");
+    modale.classList.toggle("Rien");
+    photoList.innerHTML = ``;
+}
+croixFermer.addEventListener("click", fermerModale);
+
+//ouvrir fenêtre modale
+function ouvrirModale() {
+    modaleBackground.classList.toggle("Rien");
+    modale.classList.toggle("displayFlex");
+    modale.classList.toggle("Rien");
+    fetchProjets().then(projets => genererPhotosModale(projets));
+}
+modaleOn.addEventListener("click", ouvrirModale);
