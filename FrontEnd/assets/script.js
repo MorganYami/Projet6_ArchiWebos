@@ -1,6 +1,6 @@
-//  ----------  récupération projets
+//  ----------  Fetch projects
 
-async function fetchProjets() {
+async function fetchProjects() {
     const response = await fetch("http://localhost:5678/api/works", {
         method: 'GET',
         headers: {
@@ -13,66 +13,66 @@ async function fetchProjets() {
     throw new Error('Impossible de contacter le serveur')
 }
 
-// ----------  génération des fiches (functions)
-// afficher tous les projets
+// ----------  generate fiches (functions)
+// display all projects
 const gallery = document.getElementById("gallery");
 
-function displayProjets(projets) {
-    projets.forEach(projets => {
+function displayProjects(projects) {
+    projects.forEach(projects => {
         gallery.innerHTML += `
         <figure>
-        <img src="${projets.imageUrl}" alt="${projets.title}">
-        <figcaption>${projets.title}</figcaption>
+        <img src="${projects.imageUrl}" alt="${projects.title}">
+        <figcaption>${projects.title}</figcaption>
     </figure>
         `
     });
 }
 
-// afficher les projets objets
-function displayObjets(projets) {
+// display projects objets
+function displayObjets(projects) {
     let projetObjets = [];
-    for (let i = 0; i < projets.length; i++) {
-        if (projets[i].categoryId == 1) {
-            projetObjets.push(projets[i]);
+    for (let i = 0; i < projects.length; i++) {
+        if (projects[i].categoryId == 1) {
+            projetObjets.push(projects[i]);
         }
     }
-    displayProjets(projetObjets);
+    displayProjects(projetObjets);
 }
 
-// afficher les projets Appartements
-function displayAppart(projets) {
+// display projects Appartements
+function displayAppart(projects) {
     let projetAppart = [];
-    for (let i = 0; i < projets.length; i++) {
-        if (projets[i].categoryId == 2) {
-            projetAppart.push(projets[i]);
+    for (let i = 0; i < projects.length; i++) {
+        if (projects[i].categoryId == 2) {
+            projetAppart.push(projects[i]);
         }
     }
-    displayProjets(projetAppart);
+    displayProjects(projetAppart);
 }
 
-// afficher les projets Hôtels et Restaurants
-function displayHR(projets) {
+// display projects Hôtels et Restaurants
+function displayHR(projects) {
     let projetHR = [];
-    for (let i = 0; i < projets.length; i++) {
-        if (projets[i].categoryId == 3) {
-            projetHR.push(projets[i]);
+    for (let i = 0; i < projects.length; i++) {
+        if (projects[i].categoryId == 3) {
+            projetHR.push(projects[i]);
         }
     }
-    displayProjets(projetHR);
+    displayProjects(projetHR);
 }
 
-// ----------  affichage initial de la page
-fetchProjets().then(projets => displayProjets(projets));
+// ----------  initial page display
+fetchProjects().then(projects => displayProjects(projects));
 
 
-// ----------  filtrage des projets - (Event listener)
+// ----------  projects filtering - (Event listener)
 const filtres = document.getElementsByClassName("filtreOn")
 const filtreTous = document.getElementById("Tous")
 const filtreObjets = document.getElementById("Objets")
 const filtreAppartements = document.getElementById("Appartements")
 const filtreHotelsResto = document.getElementById("HotelsResto")
 
-// changer le bouton actif et vider la gallerie
+// change actif boutton and emptying the gallery
 function toggleFiltre(boutonActif) {
     const filtreOn = filtres[0]
     filtreOn.classList.toggle("filtreOn")
@@ -80,44 +80,46 @@ function toggleFiltre(boutonActif) {
     gallery.innerHTML = ("");
 }
 
-// afficher tous les projets
+// display all projects
 filtreTous.addEventListener("click", function () {
     toggleFiltre(filtreTous);
-    fetchProjets().then(function (data) {
-        displayProjets(data)
+    fetchProjects().then(function (data) {
+        displayProjects(data)
     })
 })
 
-// afficher les projets objets
+// display projects objets
 filtreObjets.addEventListener("click", function () {
     toggleFiltre(filtreObjets);
-    fetchProjets().then(function (data) {
+    fetchProjects().then(function (data) {
         displayObjets(data)
     })
 })
 
-// afficher les projets Appartements
+// display projects Appartements
 filtreAppartements.addEventListener("click", function () {
     toggleFiltre(filtreAppartements);
-    fetchProjets().then(function (data) {
+    fetchProjects().then(function (data) {
         displayAppart(data)
     })
 })
 
-// afficher les projets Hôtels et Restaurants
+// display projects Hôtels et Restaurants
 filtreHotelsResto.addEventListener("click", function () {
     toggleFiltre(filtreHotelsResto);
-    fetchProjets().then(function (data) {
+    fetchProjects().then(function (data) {
         displayHR(data)
     })
 })
 
-//test pour le token
+// token test
 const token = localStorage.getItem("token");
 const linkLog = document.getElementById("linkLog");
-const modif = document.getElementById("modifProjets");
+const modif = document.getElementById("modifProjects");
 const boiteFiltres = document.getElementById("filtresBox");
-if (token == null) {
+
+// function for login
+function Login() {
     linkLog.innerHTML = `
     <a href="loggin.html">login</a>
     `;
@@ -127,53 +129,77 @@ if (token == null) {
         boiteFiltres.classList.remove("cacher");
         boiteFiltres.innerHTML = `
         <div id="Tous" class="button btsml filtreOn">Tous</div>
-				<div id="Objets" class="button btsml">Objets</div>
-				<div id="Appartements" class="button">Appartements</div>
-				<div id="HotelsResto" class="button">Hôtels & restaurants</div>
+                <div id="Objets" class="button btsml">Objets</div>
+                <div id="Appartements" class="button">Appartements</div>
+                <div id="HotelsResto" class="button">Hôtels & restaurants</div>
         `;
     }
 }
+
+if (token == null) {
+    Login();
+}
 else {
-    console.log("Un token a été détecté!");
-    linkLog.innerHTML = `
+    const tokenExp = JSON.parse(atob(token.split(".")[1])).exp * 1000;
+    const dateNow = new Date();
+    if (tokenExp > dateNow.getTime()) {
+        linkLog.innerHTML = `
     <a id="logout" href="">logout</a>
     `;
-    modif.innerHTML = `
+        modif.innerHTML = `
     <img src="./assets/icons/iconEdit.png">
-					<p>modifier</p>
+                    <p>modifier</p>
     `;
-    boiteFiltres.innerHTML = `
+        boiteFiltres.innerHTML = `
     <div class="vide"></div>
     `;
-    boiteFiltres.classList.add("cacher");
-    //fonction pour log out
-    const loggout = document.getElementById("logout");
-    loggout.addEventListener("click", function () {
+        boiteFiltres.classList.add("cacher");
+        //log out fonction 
+        const loggout = document.getElementById("logout");
+        loggout.addEventListener("click", function () {
+            localStorage.removeItem("token");
+        })
+    }
+    else if (tokenExp <= dateNow.getTime()) {
+        // console.log(tokenExp);
+        // console.log(dateNow.getTime());
+        Login();
         localStorage.removeItem("token");
-    })
+        console.log("Error: token expired");
+    }
 }
 
-// ------------------ Fenêtre modale
+
+// ------------------ modale window
 
 const croixFermer = document.getElementById("close");
 const modaleBackground = document.getElementById("modaleBackground");
 const modale = document.getElementById("modale");
-const modaleOn = document.getElementById("modifProjets");
-const photoList = document.getElementById("photoList");
+const modaleOn = document.getElementById("modifProjects");
 
-// gallerie photos modale
-function genererPhotosModale(projets) {
-    projets.forEach(projets => {
+// generate gallery photos modale window
+function genererPhotosModale(projects) {
+    const photoList = document.getElementById("photoList");
+    projects.forEach(projects => {
         photoList.innerHTML += `
         <div class="photoProjet">
-            <img class="photoProjetIn" src="${projets.imageUrl}" alt="${projets.title}">
+            <img class="photoProjetIn" src="${projects.imageUrl}" alt="${projects.title}">
 			<img class="bin" src="./assets/icons/iconBin.png">
 		</div>
         `
     });
 }
 
-// fermer fenêtre modale
+//open modale window
+function ouvrirModale() {
+    modaleBackground.classList.toggle("Rien");
+    modale.classList.toggle("displayFlex");
+    modale.classList.toggle("Rien");
+    fetchProjects().then(projects => genererPhotosModale(projects));
+}
+modaleOn.addEventListener("click", ouvrirModale);
+
+// close modale window
 function fermerModale() {
     modaleBackground.classList.toggle("Rien");
     modale.classList.toggle("displayFlex");
@@ -181,12 +207,3 @@ function fermerModale() {
     photoList.innerHTML = ``;
 }
 croixFermer.addEventListener("click", fermerModale);
-
-//ouvrir fenêtre modale
-function ouvrirModale() {
-    modaleBackground.classList.toggle("Rien");
-    modale.classList.toggle("displayFlex");
-    modale.classList.toggle("Rien");
-    fetchProjets().then(projets => genererPhotosModale(projets));
-}
-modaleOn.addEventListener("click", ouvrirModale);
