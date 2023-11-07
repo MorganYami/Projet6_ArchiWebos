@@ -112,7 +112,7 @@ filtreHotelsResto.addEventListener("click", function () {
     })
 })
 
-// token test
+// --------------- token test
 const token = localStorage.getItem("token");
 const linkLog = document.getElementById("linkLog");
 const modif = document.getElementById("modifProjects");
@@ -172,38 +172,89 @@ else {
 
 // ------------------ modale window
 
-const croixFermer = document.getElementById("close");
+const close = document.getElementById("close");
 const modaleBackground = document.getElementById("modaleBackground");
 const modale = document.getElementById("modale");
 const modaleOn = document.getElementById("modifProjects");
 
 // generate gallery photos modale window
 function genererPhotosModale(projects) {
+    const modaleIntern = document.getElementById("modaleIntern");
+    modaleIntern.innerHTML = `
+    <h2 class="modaleTitle">Galerie Photo</h2>
+    <div id="photoList" class="photoList">
+    </div>
+    <button id="ajouterPhoto">Ajouter une photo</button>`;
     const photoList = document.getElementById("photoList");
     projects.forEach(projects => {
         photoList.innerHTML += `
         <div class="photoProjet">
             <img class="photoProjetIn" src="${projects.imageUrl}" alt="${projects.title}">
-			<img class="bin" src="./assets/icons/iconBin.png">
+			<img class="bin" src="./assets/icons/iconBin.png" id="${projects.id}">
 		</div>
-        `
+        `;
+        document.getElementById(projects.id).addEventListener("clic", function () {
+            console.log("Supprimer photo n°: ", projects.id);
+        });
     });
 }
 
+// modale for adding a photo
+function addphoto() {
+    document.getElementById("ajouterPhoto").addEventListener("click", function () {
+        document.getElementById("modaleIntern").innerHTML = `
+        <img id="back" class="back" src="./assets/icons/arrow-left-icon-2048x1433-le08mlmd.png">
+        <h2 class="modaleTitle">Ajout Photo</h2>
+        <form class="addPhotoForm displayFlex flexCol">
+            <div id="addPhotoBox" class="addPhotoBox displayFlex flexCol centerFlex">
+                <img class="photoDefault" src="./assets/icons/imageDefault.png">
+                <input id="photoPlus" class="button" type="button" value="+ Ajouter photo">
+                <p>jpg, png : 4mo max</p>
+            </div>
+            <label for="PhotoTitle">Titre</label>
+            <input id="PhotoTitle"  class="shadow" type="text" name="PhotoTitle" required>
+            <p>Catégorie</p>
+            <select class="shadow" list="Categories" name="Categorie" id="Categorie">
+                <option value="Objets">Objets</option>
+                <option value="Appartements">Appartements</option>
+                <option value="Hotels & restaurants">Hotels & restaurants</option>
+            </select>
+            <div class="lineForm"></div>
+            <input class="button whiteText" type="button" value="valider" disabled>
+        </form>
+        `;
+        back();
+    });
+}
+
+//go back to the gallery
+function back() {
+    const backArrow = document.getElementById("back");
+    if (typeof backArrow !== 'null') {
+        backArrow.addEventListener("click", function () {
+            fetchProjects().then(projects => genererPhotosModale(projects))
+                .then(addphoto);
+        });
+    };
+}
+
 //open modale window
-function ouvrirModale() {
+function openModale() {
     modaleBackground.classList.toggle("Rien");
     modale.classList.toggle("displayFlex");
     modale.classList.toggle("Rien");
-    fetchProjects().then(projects => genererPhotosModale(projects));
+    fetchProjects().then(projects => genererPhotosModale(projects))
+        .then(addphoto);
 }
-modaleOn.addEventListener("click", ouvrirModale);
+modaleOn.addEventListener("click", openModale);
 
 // close modale window
-function fermerModale() {
+function closeModale() {
     modaleBackground.classList.toggle("Rien");
     modale.classList.toggle("displayFlex");
     modale.classList.toggle("Rien");
-    photoList.innerHTML = ``;
+    if (typeof photoList !== 'undefined') {
+        photoList.innerHTML = ``;
+    }
 }
-croixFermer.addEventListener("click", fermerModale);
+close.addEventListener("click", closeModale);

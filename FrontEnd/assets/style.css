@@ -389,8 +389,21 @@ footer nav ul {
 .displayFlex {
 	display: flex;
 }
+.flexCol {
+	flex-direction: column;
+}
+.centerFlex {
+	align-items: center;
+	justify-content: center;
+}
 .Rien {
 	display: none;
+}
+.whiteText {
+	color: white;
+}
+.greyBack {
+	background-color: #a7a7a7;
 }
 .modale {
 	position: fixed;
@@ -405,21 +418,77 @@ footer nav ul {
     box-shadow: 1px 1px 10px rgb(155, 154, 149);
 }
 
-.modaleTittle {
+.modaleTitle {
 	color: black;
 	font-size: 26px;
 	font-family: 'Work Sans';
-	font-weight: 100;
 	margin-top: 20px;
 }
+.addPhotoForm{
+	width: 80%;
+}
+.addPhotoForm .button {	
+	border-radius: 25px;
+	padding: 10px;
+	border: none;
+}
+.addPhotoForm select {
+	cursor: pointer;
+}
+.addPhotoForm .button:disabled {
+	background-color: #a7a7a7;
+}
+.addPhotoForm .button:disabled:hover {
+	box-shadow: none;
+	cursor:default;
+}
+.shadow {
+	box-shadow: 1px 1px 10px rgb(233, 231, 220);
+	padding: 10px;
+}
+.addPhotoForm > *{
+	border: none;
+	margin-top: 20px;
+}
+.addPhotoBox {
+	background-color: rgb(232, 241, 246);
+	border-radius: 5px;
+	padding: 15px;
+}
+.addPhotoBox .button {
+	color: rgb(48, 102, 133);
+	background-color:rgb(185, 197, 204) ;
+	margin: 10px 0px;
+	width: 200px;
+}
+.addPhotoBox .button:hover {
+	box-shadow: none;
+	color: white;
+	background-color: #1D6154;
+}
+.photoDefault {
+	height: 130px;
 
+}
+.lineForm {
+	width: 100%;
+	border-bottom: 1px solid black;
+	margin-top:45px ;
+	margin-bottom: 20px;
+}
 .close {
-	height: 12px;
-	width: 12px;
+	height: 15px;
+	width: 15px;
 }
 
-.close:hover {
+.close:hover, .back:hover {
 	cursor: pointer;
+}
+.back {
+	height: 18px;
+	position: relative;
+	top:-16px;
+	align-self: flex-start;
 }
 
 .modaleIntern {
