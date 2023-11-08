@@ -506,7 +506,7 @@ footer nav ul {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
-	justify-content: space-between;
+	justify-content:flex-start;
 	align-items: center;
 }
 .bin {
@@ -536,19 +536,6 @@ footer nav ul {
 	left: 0%;
 	width: 100%;
 	height: 100%;
-}
-.photo1 {
-	background-image: url("./images/abajour-tahina.png");
-}.photo2 {
-	background-image: url("./images/appartement-paris-v.png");
-}.photo3 {
-	background-image: url("./images/appartement-paris-x.png");
-}.photo4 {
-	background-image: url("./images/appartement-paris-xviii.png");
-}.photo5 {
-	background-image: url("./images/bar-lullaby-paris.png");
-}.photo6 {
-	background-image: url("./images/hotel-first-arte-new-delhi.png");
 }
 
 .modaleIntern button {

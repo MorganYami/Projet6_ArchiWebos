@@ -154,15 +154,13 @@ else {
     <div class="vide"></div>
     `;
         boiteFiltres.classList.add("cacher");
-        //log out fonction 
+        //Logout the user
         const loggout = document.getElementById("logout");
         loggout.addEventListener("click", function () {
             localStorage.removeItem("token");
         })
     }
     else if (tokenExp <= dateNow.getTime()) {
-        // console.log(tokenExp);
-        // console.log(dateNow.getTime());
         Login();
         localStorage.removeItem("token");
         console.log("Error: token expired");
@@ -177,7 +175,7 @@ const modaleBackground = document.getElementById("modaleBackground");
 const modale = document.getElementById("modale");
 const modaleOn = document.getElementById("modifProjects");
 
-// generate gallery photos modale window
+// generate gallery
 function genererPhotosModale(projects) {
     const modaleIntern = document.getElementById("modaleIntern");
     modaleIntern.innerHTML = `
@@ -190,13 +188,24 @@ function genererPhotosModale(projects) {
         photoList.innerHTML += `
         <div class="photoProjet">
             <img class="photoProjetIn" src="${projects.imageUrl}" alt="${projects.title}">
-			<img class="bin" src="./assets/icons/iconBin.png" id="${projects.id}">
+			<img class="bin" src="./assets/icons/iconBin.png" id="bin${projects.id}">
 		</div>
         `;
-        document.getElementById(projects.id).addEventListener("clic", function () {
-            console.log("Supprimer photo n°: ", projects.id);
-        });
     });
+    binListener(projects);
+}
+
+// deleting project
+function binListener(projects){
+    const bins = document.querySelectorAll(".bin");
+    bins.forEach(function (currentValue) {
+        currentValue.addEventListener("click", function () {
+            const deleteId = this.id.split("bin")[1];
+            console.log("Supprimer photo n°: ", deleteId);
+            DeleteProject(deleteId, token);
+        })
+    });
+    // genererPhotosModale(projects);
 }
 
 // modale for adding a photo
@@ -230,7 +239,7 @@ function addphoto() {
 //go back to the gallery
 function back() {
     const backArrow = document.getElementById("back");
-    if (typeof backArrow !== 'null') {
+    if (backArrow) {
         backArrow.addEventListener("click", function () {
             fetchProjects().then(projects => genererPhotosModale(projects))
                 .then(addphoto);
@@ -258,3 +267,33 @@ function closeModale() {
     }
 }
 close.addEventListener("click", closeModale);
+
+// adding project
+async function addProject() {
+    const response = await fetch("http://localhost:5678/api/works", {
+        method: 'POST',
+        headers: {
+            "Accept": "application/json"
+        }
+    })
+    if (response.ok === true) {
+        return await response.json();
+    }
+    throw new Error('Impossible de contacter le serveur')
+}
+
+// deleting project
+async function DeleteProject(id, token) {
+    const UrlDelete = "http://localhost:5678/api/works/" + id;
+    const bearerToken = 'Bearer ' + token;
+    const response = await fetch( UrlDelete, {
+        method: 'DELETE',
+        headers: {
+            "Authorization": bearerToken,
+            "Content-Type": "application/json"
+        }
+    })
+    if (response.ok === true) {
+        console.log("Projet " , id," a été effacé!"); 
+    }
+}
