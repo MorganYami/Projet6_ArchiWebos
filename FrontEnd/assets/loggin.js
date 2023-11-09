@@ -2,9 +2,6 @@ const formulaire = document.getElementById("formConnect");
 formulaire.addEventListener('submit', event => {
     event.preventDefault();
     const formData = new FormData(formulaire);
-    // console.log("Envoyé: ");
-    // console.log("Email: " + formData.get('email'));
-    // console.log("Mot de Passe: " + formData.get('password'));
     const data = Object.fromEntries(formData);
 
     fetch("http://localhost:5678/api/users/login", {
@@ -24,14 +21,9 @@ formulaire.addEventListener('submit', event => {
             }
             else {
                 messageErreur.innerHTML = ``;
-                // console.log("reponse serveur: ");
-                // console.log(data);    
                 localStorage.setItem("token", data.token);    
                 location.href = "index.html";        
             }
         })
         .catch(error => console.log(error));
 })
-
-//email: sophie.bluel@test.tld
-//password: S0phie 

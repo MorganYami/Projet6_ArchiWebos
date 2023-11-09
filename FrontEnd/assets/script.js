@@ -205,7 +205,6 @@ function binListener(projects){
             DeleteProject(deleteId, token);
         })
     });
-    // genererPhotosModale(projects);
 }
 
 // modale for adding a photo
@@ -216,6 +215,7 @@ function addphoto() {
         <h2 class="modaleTitle">Ajout Photo</h2>
         <form class="addPhotoForm displayFlex flexCol">
             <div id="addPhotoBox" class="addPhotoBox displayFlex flexCol centerFlex">
+                <input class="addPhotoInput hidden" id="addPhotoInput" type="file" required>
                 <img class="photoDefault" src="./assets/icons/imageDefault.png">
                 <input id="photoPlus" class="button" type="button" value="+ Ajouter photo">
                 <p>jpg, png : 4mo max</p>
@@ -229,7 +229,7 @@ function addphoto() {
                 <option value="Hotels & restaurants">Hotels & restaurants</option>
             </select>
             <div class="lineForm"></div>
-            <input class="button whiteText" type="button" value="valider" disabled>
+            <input id="valider" class="button whiteText" type="button" value="Valider" disabled>
         </form>
         `;
         back();
@@ -264,22 +264,25 @@ function closeModale() {
     modale.classList.toggle("Rien");
     if (typeof photoList !== 'undefined') {
         photoList.innerHTML = ``;
-    }
+    };    
+    gallery.innerHTML = ("");
+    fetchProjects().then(projects => displayProjects(projects));
 }
 close.addEventListener("click", closeModale);
 
 // adding project
 async function addProject() {
+    const bearerToken = 'Bearer ' + token;
     const response = await fetch("http://localhost:5678/api/works", {
         method: 'POST',
         headers: {
-            "Accept": "application/json"
+            "Accept": "application/json",
+            "Authorization": bearerToken
         }
     })
     if (response.ok === true) {
-        return await response.json();
+        console.log("Un nouveau projet a été ajouté");
     }
-    throw new Error('Impossible de contacter le serveur')
 }
 
 // deleting project
@@ -289,6 +292,7 @@ async function DeleteProject(id, token) {
     const response = await fetch( UrlDelete, {
         method: 'DELETE',
         headers: {
+            "Accept": "application/json",
             "Authorization": bearerToken,
             "Content-Type": "application/json"
         }
@@ -296,4 +300,7 @@ async function DeleteProject(id, token) {
     if (response.ok === true) {
         console.log("Projet " , id," a été effacé!"); 
     }
+    //regenerate gallery
+    fetchProjects().then(projects => genererPhotosModale(projects))
+                .then(addphoto);
 }

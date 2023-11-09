@@ -466,6 +466,17 @@ footer nav ul {
 	color: white;
 	background-color: #1D6154;
 }
+.addPhotoBox p {
+	margin-bottom: 20px;
+}
+
+.addPhotoInput {
+	width: auto;
+}
+.hidden {
+	visibility: hidden ;
+}
+
 .photoDefault {
 	height: 130px;
 
