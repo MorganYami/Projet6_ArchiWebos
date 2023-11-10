@@ -399,6 +399,9 @@ footer nav ul {
 .Rien {
 	display: none;
 }
+.hidden {
+	display: none;
+}
 .whiteText {
 	color: white;
 }
@@ -429,6 +432,7 @@ footer nav ul {
 }
 .addPhotoForm .button {	
 	border-radius: 25px;
+	background-color:#1D6154;
 	padding: 10px;
 	border: none;
 }
@@ -466,15 +470,12 @@ footer nav ul {
 	color: white;
 	background-color: #1D6154;
 }
-.addPhotoBox p {
-	margin-bottom: 20px;
+.imgPreview {
+	height: 200px;
 }
 
-.addPhotoInput {
-	width: auto;
-}
-.hidden {
-	visibility: hidden ;
+.photoToPost {
+	height: 169px;
 }
 
 .photoDefault {

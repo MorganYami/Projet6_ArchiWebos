@@ -192,11 +192,11 @@ function genererPhotosModale(projects) {
 		</div>
         `;
     });
-    binListener(projects);
+    binListener();
 }
 
 // deleting project
-function binListener(projects){
+function binListener() {
     const bins = document.querySelectorAll(".bin");
     bins.forEach(function (currentValue) {
         currentValue.addEventListener("click", function () {
@@ -207,32 +207,96 @@ function binListener(projects){
     });
 }
 
+// activating the 'valider' button
+function validerOn() {
+    let photoValue = document.getElementById("addPhotoInput").value;
+    let PhotoTitleValue = document.getElementById("PhotoTitle").value;
+    let PhotoCategorieValue = document.getElementById("categorie").value;
+    if (PhotoTitleValue && photoValue && PhotoCategorieValue) {
+        document.getElementById("valider").removeAttribute("disabled");
+    }
+}
+
+// previewing photo to upload
+function previewPicture(photo) {
+    const toggledefault = document.querySelectorAll(".addPhotoBox > *");
+    toggledefault.forEach(function (element) {
+        element.classList.toggle("hidden");
+    })
+    const [image] = photo.files;
+    let types = ["image/jpg", "image/png"];
+    if (types.includes(image.type)) {
+        if (image) {
+            const reader = new FileReader();
+            reader.onload = function (photo) {
+                document.getElementById("imgPreview").src = photo.target.result
+            }
+            reader.readAsDataURL(image);
+        }
+    }
+    validerOn();
+}
+
 // modale for adding a photo
 function addphoto() {
     document.getElementById("ajouterPhoto").addEventListener("click", function () {
         document.getElementById("modaleIntern").innerHTML = `
         <img id="back" class="back" src="./assets/icons/arrow-left-icon-2048x1433-le08mlmd.png">
         <h2 class="modaleTitle">Ajout Photo</h2>
-        <form class="addPhotoForm displayFlex flexCol">
+        <form id="newProject" class="addPhotoForm displayFlex flexCol" method="post">
             <div id="addPhotoBox" class="addPhotoBox displayFlex flexCol centerFlex">
-                <input class="addPhotoInput hidden" id="addPhotoInput" type="file" required>
+                <input id="addPhotoInput" class="addPhotoInput Rien" type="file" name="imageUrl" accept=".jpg, .png" onchange="previewPicture(this)" required>
                 <img class="photoDefault" src="./assets/icons/imageDefault.png">
                 <input id="photoPlus" class="button" type="button" value="+ Ajouter photo">
                 <p>jpg, png : 4mo max</p>
+                <img id="imgPreview" class="imgPreview hidden" src="">
             </div>
             <label for="PhotoTitle">Titre</label>
-            <input id="PhotoTitle"  class="shadow" type="text" name="PhotoTitle" required>
+            <input id="PhotoTitle"  class="shadow" type="text" name="title" onchange="validerOn()" required>
             <p>Catégorie</p>
-            <select class="shadow" list="Categories" name="Categorie" id="Categorie">
-                <option value="Objets">Objets</option>
-                <option value="Appartements">Appartements</option>
-                <option value="Hotels & restaurants">Hotels & restaurants</option>
+            <select id="categorie" class="shadow" list="Categories" name="categorieId" id="Categorie" onchange="validerOn()" required>
+                <option value="">  </option>
+                <option value="1">Objets</option>
+                <option value="2">Appartements</option>
+                <option value="3">Hotels & restaurants</option>
             </select>
             <div class="lineForm"></div>
-            <input id="valider" class="button whiteText" type="button" value="Valider" disabled>
+            <input id="valider" class="button whiteText" type="submit" value="Valider" disabled>
         </form>
         `;
+        // adding project
+        const formulaire = document.getElementById("newProject");
+        formulaire.addEventListener('submit', event => {
+            const bearerToken = 'Bearer ' + token;
+            const formData = new FormData(formulaire);
+            event.preventDefault();
+            console.log("sending...", formData);
+            fetch("http://localhost:5678/api/works", {
+                method: 'POST',
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": bearerToken
+                },
+                body: formData
+            }).then(response => console.log(response));
+            // if (response.ok === true) {
+            //     console.log("Un nouveau projet a été ajouté: ", response);
+            // }
+            // else {
+            //     console.log("Une Erreur est survenue!!!")
+            // }
+        });
         back();
+        //adding photo
+        const inputAddPhoto = document.getElementById("addPhotoInput");
+        const buttonAddPhoto = document.getElementById("photoPlus");
+        buttonAddPhoto.addEventListener("click", function () {
+            if (inputAddPhoto) {
+                inputAddPhoto.click();
+            }
+        },
+            false,
+        );
     });
 }
 
@@ -264,32 +328,19 @@ function closeModale() {
     modale.classList.toggle("Rien");
     if (typeof photoList !== 'undefined') {
         photoList.innerHTML = ``;
-    };    
+    };
     gallery.innerHTML = ("");
     fetchProjects().then(projects => displayProjects(projects));
 }
 close.addEventListener("click", closeModale);
 
-// adding project
-async function addProject() {
-    const bearerToken = 'Bearer ' + token;
-    const response = await fetch("http://localhost:5678/api/works", {
-        method: 'POST',
-        headers: {
-            "Accept": "application/json",
-            "Authorization": bearerToken
-        }
-    })
-    if (response.ok === true) {
-        console.log("Un nouveau projet a été ajouté");
-    }
-}
+
 
 // deleting project
 async function DeleteProject(id, token) {
     const UrlDelete = "http://localhost:5678/api/works/" + id;
     const bearerToken = 'Bearer ' + token;
-    const response = await fetch( UrlDelete, {
+    const response = await fetch(UrlDelete, {
         method: 'DELETE',
         headers: {
             "Accept": "application/json",
@@ -298,9 +349,9 @@ async function DeleteProject(id, token) {
         }
     })
     if (response.ok === true) {
-        console.log("Projet " , id," a été effacé!"); 
+        console.log("Projet ", id, " a été effacé!");
     }
     //regenerate gallery
     fetchProjects().then(projects => genererPhotosModale(projects))
-                .then(addphoto);
+        .then(addphoto);
 }
