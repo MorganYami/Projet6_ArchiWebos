@@ -269,42 +269,18 @@ function addphoto() {
         formulaire.addEventListener('submit', event => {
             event.preventDefault();
             const bearerToken = 'Bearer ' + token;
-            const formData = new FormData(formulaire);
-            const photo = document.getElementById("addPhotoInput");
-            // const [image] = photo.files;
-            // let types = ["image/jpg", "image/png"];
-            // if (types.includes(image.type)) {
-            //     if (image) {
-            //         image.toBlob((blob) => {
-            //         const reader = new FileReader();
-            //         reader.onload = function () {
-            //             formData.append("imageUrl", reader.result);
-            //             console.log(reader.result);
-            //         }
-            //         reader.readAsBinaryString(blob);
-            //         })
-            //     }
-            // }
-            // formData.append("imageUrl", photo.files[0])
-            // console.log(document.getElementById("addPhotoInput").files[0]);
+            let formData = new FormData(formulaire);
             const data = Object.fromEntries(formData);
             console.log(data);
             fetch("http://localhost:5678/api/works", {
                 method: 'POST',
                 headers: {
-                    "Accept": "application/json",
+                    // "Accept": "application/json",
                     "Authorization": bearerToken
                 },
-                body: data
-            }).then(response => console.log(response))    
-            // .then(function(){
-            // if (response.status === 201) {
-            //     console.log("Un nouveau projet a été ajouté: ", response);
-            // }
-            // else {
-            //     console.log("Une Erreur est survenue!!!: ", response)
-            // }
-            // })
+                body: formData
+            }).then(response => console.log(response))   
+
         });
         back();
         //adding photo
