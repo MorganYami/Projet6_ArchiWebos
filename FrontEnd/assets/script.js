@@ -254,7 +254,7 @@ function addphoto() {
             <label for="PhotoTitle">Titre</label>
             <input id="PhotoTitle"  class="shadow" type="text" name="title" onchange="validerOn()" required>
             <p>Catégorie</p>
-            <select id="categorie" class="shadow" list="Categories" name="categorieId" id="Categorie" onchange="validerOn()" required>
+            <select id="categorie" class="shadow" list="Categories" name="categoryId" id="Categorie" onchange="validerOn()" required>
                 <option value="">  </option>
                 <option value="1">Objets</option>
                 <option value="2">Appartements</option>
@@ -267,24 +267,44 @@ function addphoto() {
         // adding project
         const formulaire = document.getElementById("newProject");
         formulaire.addEventListener('submit', event => {
+            event.preventDefault();
             const bearerToken = 'Bearer ' + token;
             const formData = new FormData(formulaire);
-            event.preventDefault();
-            console.log("sending...", formData);
+            const photo = document.getElementById("addPhotoInput");
+            // const [image] = photo.files;
+            // let types = ["image/jpg", "image/png"];
+            // if (types.includes(image.type)) {
+            //     if (image) {
+            //         image.toBlob((blob) => {
+            //         const reader = new FileReader();
+            //         reader.onload = function () {
+            //             formData.append("imageUrl", reader.result);
+            //             console.log(reader.result);
+            //         }
+            //         reader.readAsBinaryString(blob);
+            //         })
+            //     }
+            // }
+            // formData.append("imageUrl", photo.files[0])
+            // console.log(document.getElementById("addPhotoInput").files[0]);
+            const data = Object.fromEntries(formData);
+            console.log(data);
             fetch("http://localhost:5678/api/works", {
                 method: 'POST',
                 headers: {
                     "Accept": "application/json",
                     "Authorization": bearerToken
                 },
-                body: formData
-            }).then(response => console.log(response));
-            // if (response.ok === true) {
+                body: data
+            }).then(response => console.log(response))    
+            // .then(function(){
+            // if (response.status === 201) {
             //     console.log("Un nouveau projet a été ajouté: ", response);
             // }
             // else {
-            //     console.log("Une Erreur est survenue!!!")
+            //     console.log("Une Erreur est survenue!!!: ", response)
             // }
+            // })
         });
         back();
         //adding photo
