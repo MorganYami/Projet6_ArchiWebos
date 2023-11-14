@@ -269,17 +269,35 @@ function addphoto() {
         formulaire.addEventListener('submit', event => {
             event.preventDefault();
             const bearerToken = 'Bearer ' + token;
-            let formData = new FormData(formulaire);
-            const data = Object.fromEntries(formData);
-            console.log(data);
-            fetch("http://localhost:5678/api/works", {
-                method: 'POST',
-                headers: {
-                    // "Accept": "application/json",
-                    "Authorization": bearerToken
-                },
-                body: formData
-            }).then(response => console.log(response))   
+            let formData = new FormData();
+            formData.append('title', formulaire.title.value);
+            // formData.append('imageUrl', formulaire.imageUrl.files[0]);
+            const [image] = document.getElementById("addPhotoInput").files;
+            let types = ["image/jpg", "image/png"];
+            if (types.includes(image.type)) {
+                if (image) {
+                    const reader = new FileReader();
+                    reader.onload = function (photo) {
+                        formData.append('imageUrl', photo.target.result);
+                        formData.append('categoryId', formulaire.categoryId.value);
+                        console.log(Array.from(formData));
+                        fetch("http://localhost:5678/api/works", {
+                            method: 'POST',
+                            headers: {
+                                "Accept": "application/json",
+                                "Authorization": bearerToken,
+                            },
+                            body: formData
+                        }).then(response => {if(response.status == 201) {
+                            console.log("projet ajouté");
+                        }
+                    else {
+                        console.log("Une erreur est survenue: ", response)
+                    }})
+                    }
+                    reader.readAsDataURL(image);
+                }
+            }
 
         });
         back();
