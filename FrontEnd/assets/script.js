@@ -286,6 +286,7 @@ function addphoto() {
                             headers: {
                                 "Accept": "application/json",
                                 "Authorization": bearerToken,
+                                "Content-Type": undefined
                             },
                             body: formData
                         }).then(response => {if(response.status == 201) {
