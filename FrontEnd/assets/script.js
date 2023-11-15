@@ -163,7 +163,6 @@ else {
     else if (tokenExp <= dateNow.getTime()) {
         Login();
         localStorage.removeItem("token");
-        console.log("Error: token expired");
     }
 }
 
@@ -201,7 +200,6 @@ function binListener() {
     bins.forEach(function (currentValue) {
         currentValue.addEventListener("click", function () {
             const deleteId = this.id.split("bin")[1];
-            console.log("Supprimer photo n°: ", deleteId);
             DeleteProject(deleteId, token);
         })
     });
@@ -285,10 +283,9 @@ function addphoto() {
                         body: formData
                     }).then(response => {
                         if (response.status == 201) {
-                            console.log("projet ajouté");
                         }
                         else {
-                            console.log("Une erreur est survenue: ", response)
+                            console.error("Une erreur est survenue: ", response)
                         }
                     })
 
@@ -358,8 +355,8 @@ async function DeleteProject(id, token) {
             "Content-Type": "application/json"
         }
     })
-    if (response.ok === true) {
-        console.log("Projet ", id, " a été effacé!");
+    if (response.ok !== true) {
+        console.error("Une erreur est survenue: ", response);
     }
     //regenerate gallery
     fetchProjects().then(projects => genererPhotosModale(projects))
