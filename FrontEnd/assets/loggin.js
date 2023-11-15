@@ -11,7 +11,7 @@ formulaire.addEventListener('submit', event => {
             "Content-Type": "application/json"
         },
         body: JSON.stringify(data)
-    }).then(res => res.json())
+    }).then(res => res.json()) // if res pas 200 throw error
         .then(function (data) {
             const messageErreur = document.getElementById("messageErreur");
             if (data.message !== undefined) {
