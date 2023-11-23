@@ -283,6 +283,8 @@ function addphoto() {
                         body: formData
                     }).then(response => {
                         if (response.status == 201) {
+                            fetchProjects().then(projects => genererPhotosModale(projects))
+                                .then(addphoto);
                         }
                         else {
                             console.error("Une erreur est survenue: ", response)
