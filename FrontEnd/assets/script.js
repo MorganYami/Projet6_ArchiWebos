@@ -18,6 +18,7 @@ async function fetchProjects() {
 const gallery = document.getElementById("gallery");
 
 function displayProjects(projects) {
+        gallery.innerHTML = ("");
     projects.forEach(projects => {
         gallery.innerHTML += `
         <figure>
@@ -284,7 +285,10 @@ function addphoto() {
                     }).then(response => {
                         if (response.status == 201) {
                             fetchProjects().then(projects => genererPhotosModale(projects))
-                                .then(addphoto);
+                                .then(addphoto)
+                                .then(() => {
+                                    fetchProjects().then(projects => displayProjects(projects))
+                                })
                         }
                         else {
                             console.error("Une erreur est survenue: ", response)
@@ -315,7 +319,10 @@ function back() {
     if (backArrow) {
         backArrow.addEventListener("click", function () {
             fetchProjects().then(projects => genererPhotosModale(projects))
-                .then(addphoto);
+                .then(addphoto)
+                .then(() => {
+                    fetchProjects().then(projects => displayProjects(projects))
+                })
         });
     };
 }
@@ -362,5 +369,8 @@ async function DeleteProject(id, token) {
     }
     //regenerate gallery
     fetchProjects().then(projects => genererPhotosModale(projects))
-        .then(addphoto);
+        .then(addphoto)
+        .then(() => {
+            fetchProjects().then(projects => displayProjects(projects))
+        })
 }
